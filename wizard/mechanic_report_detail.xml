@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mechanic_report_detail_view_form" model="ir.ui.view">
+        <field name="name">mechanic_report.detail.view.form</field>
+        <field name="model">car.workshop.mechanic.report.detail</field>
+        <field name="arch" type="xml">
+            <form>
+                <h1>
+                    <field name="user_id"/>
+                </h1>
+                <field name="work_ids">
+                    <tree>
+                        <field name="work_id"/>
+                        <field name="time_spent" sum="Time planned"/>
+                        <field name="duration" sum="Time spent"/>
+                        <field name="diff" sum="Time diff"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="mechanic_report_detail_view_tree" model="ir.ui.view">
+        <field name="name">mechanic_report.detail.view.tree</field>
+        <field name="model">car.workshop.mechanic.report.detail</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="user_id"/>
+                <field name="time_spent" sum="Time planned"/>
+                <field name="duration" sum="Time spent"/>
+                <field name="diff" sum="Time diff"/>
+                <field name="to_pay" sum="To pay"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

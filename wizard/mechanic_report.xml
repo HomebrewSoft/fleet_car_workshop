@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mechanic_report_view_form" model="ir.ui.view">
+        <field name="name">mechanic_report.view.form</field>
+        <field name="model">car.workshop.mechanic.report</field>
+        <field name="arch" type="xml">
+            <form string="Sale Commission">
+                <group col="4">
+                    <field name="start"/>
+                    <field name="stop"/>
+                </group>
+                <field name="detail_ids" default_focus="1" readonly="1"/>
+                <footer>
+                    <button name="get_detail" type="object" string="Calculate" class="oe_highlight"/>
+                    or
+                    <button name="%(report_mechanic)d" string="Print" type="action" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" style="float:right"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="mechanic_report_action" model="ir.actions.act_window">
+        <field name="name">Mechanic Report</field>
+        <field name="res_model">car.workshop.mechanic.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="mechanic_report_menu" name="Mechanic Report" action="mechanic_report_action" parent="main_workshop_menu"/>
+</odoo>

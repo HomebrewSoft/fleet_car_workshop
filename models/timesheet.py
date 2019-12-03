@@ -33,6 +33,14 @@ class PlannedWork (models.Model):
     completed = fields.Boolean(string="Completed")
     duration = fields.Float(string='Duration')
     work_date2 = fields.Datetime(string='Date')  # Date of work completed/done:completed date
+    diff = fields.Float(
+        compute='_get_diff',
+    )
+
+    @api.depends('time_spent', 'duration')
+    def _get_diff(self):
+        for record in self:
+            record.diff = record.time_spent - record.duration
 
     @api.onchange('planned_work')
     def get_price(self):
@@ -47,7 +55,7 @@ class MaterialUsed (models.Model):
     price = fields.Float(string='Unit Price')
     material_id = fields.Many2one('car.workshop')
     _defaults = {
-                    'amount': 1, }
+        'amount': 1, }
 
     @api.onchange('material')
     def get_price(self):

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_mechanic_view">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <t t-foreach="doc.detail_ids" t-as="detail">
+                            <div style="page-break-after:always;">
+                                <h1>
+                                Mechanic Report
+                                </h1>
+                                <h2>
+                                Mechanic: <span t-field="detail.user_id"/>
+                                </h2>
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Work order</th>
+                                            <th>Time planned</th>
+                                            <th>Time spent</th>
+                                            <th>Time diff</th>
+                                            <th>To pay</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="sale_tbody">
+
+                                        <t t-set="sum_time_spent" t-value="0"/>
+                                        <t t-set="sum_duration" t-value="0"/>
+                                        <t t-set="sum_diff" t-value="0"/>
+                                        <t t-set="sum_total" t-value="0"/>
+
+                                        <t t-foreach="detail.work_ids" t-as="work">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="work.work_id"/>
+                                                </td>
+                                                <td style="text-align:right">
+                                                    <span t-field="work.time_spent"/>
+                                                    <t t-set="sum_time_spent" t-value="sum_time_spent + work.time_spent"/>
+                                                </td>
+                                                <td style="text-align:right">
+                                                    <span t-field="work.duration"/>
+                                                    <t t-set="sum_duration" t-value="sum_duration + work.duration"/>
+                                                </td>
+                                                <td style="text-align:right">
+                                                    <span t-field="work.diff"/>
+                                                    <t t-set="sum_diff" t-value="sum_diff + work.diff"/>
+                                                </td>
+                                                <td>
+                                                    <!-- TODO -->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <th>TOTALS</th>
+                                            <th style="text-align:right">
+                                                <span t-esc="sum_time_spent"/>
+                                            </th>
+                                            <th style="text-align:right">
+                                                <span t-esc="sum_duration"/>
+                                            </th>
+                                            <th style="text-align:right">
+                                                <span t-esc="sum_diff"/>
+                                            </th>
+                                            <th>
+                                                <!-- TODO -->
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <report id="report_mechanic" model="car.workshop.mechanic.report" string="Commission Sales Report" name="fleet_car_workshop.report_mechanic_view" file="fleet_car_workshop.report_mechanic" report_type="qweb-pdf"/>
+</odoo>
